@@ -380,6 +380,7 @@ add_library(gazebo_parachute_plugin SHARED src/gazebo_parachute_plugin.cpp)
 add_library(gazebo_pose_sniffer_plugin SHARED src/gazebo_pose_sniffer_plugin.cpp)
 add_library(gazebo_airship_dynamics_plugin SHARED src/gazebo_airship_dynamics_plugin.cpp)
 add_library(gazebo_drop_plugin SHARED src/gazebo_drop_plugin.cpp)
+add_library(gazebo_vectored_turbofan_model SHARED src/gazebo_vectored_turbofan_model.cpp)
 
 set(plugins
   gazebo_airspeed_plugin
@@ -410,6 +411,7 @@ set(plugins
   gazebo_pose_sniffer_plugin
   gazebo_airship_dynamics_plugin
   gazebo_drop_plugin
+  gazebo_vectored_turbofan_model
   )
 
 foreach(plugin ${plugins})
@@ -482,7 +484,7 @@ set(plugins
 
   add_library(ForceVisual SHARED src/force_visual/force_visual.cpp)
   list(APPEND plugins ForceVisual)
-  
+
   add_library(AdvancedLiftDragPlugin SHARED src/liftdrag_plugin/advanced_liftdrag_plugin.cpp)
   list(APPEND plugins LiftDragPlugin)
 #endif()
