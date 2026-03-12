@@ -129,25 +129,65 @@ void GazeboVectoredTurbofanModel::OnUpdate(const common::UpdateInfo &_info) {
   // 在相对作用点施加相对力，进入 Gazebo 物理求解器。
   link_->AddLinkForce(body_force, force_application_point_);
 
-  // 可选：按固定周期发布力矢量，供 ForceVisual 绘制箭头。
-  if (force_visual_pub_ && (sim_time - last_force_visual_pub_time_ >= force_visual_pub_interval_)) {
-    msgs::Vector3d *force_center_msg = new msgs::Vector3d;
-    force_center_msg->set_x(force_application_point_.X());
-    force_center_msg->set_y(force_application_point_.Y());
-    force_center_msg->set_z(force_application_point_.Z());
+// 按固定时间间隔尝试发布力可视化消息。
+// 注意：这里是“尝试发布”，真正是否发布还要看力向量变化是否足够大。
+if (force_visual_pub_ &&
+    (sim_time - last_force_visual_pub_time_ >= force_visual_pub_interval_)) {
 
-    msgs::Vector3d *force_vector_msg = new msgs::Vector3d;
-    force_vector_msg->set_x(body_force.X());
-    force_vector_msg->set_y(body_force.Y());
-    force_vector_msg->set_z(body_force.Z());
+  // 可视化更新阈值（单位：N）。
+  // 只有当前力向量与上一次发布出去的力向量差值超过这个阈值，
+  // 才重新发布消息，从而减少 GUI 箭头刷新频率。
+  //
+  // 阈值越小：箭头更新越灵敏，但更吃性能。
+  // 阈值越大：箭头更新越少，性能更好，但显示不够细。
+  const double visual_force_delta_threshold = 1.0;
 
+  // 是否需要真的发布这次可视化消息。
+  bool should_publish = false;
+
+  // 第一次没有历史值可比较，所以直接发布一次，
+  // 否则 GUI 里可能一开始看不到箭头。
+  if (!has_last_visual_force_) {
+    should_publish = true;
+  } else {
+    // 比较“当前力向量”和“上一次发布的力向量”的差异。
+    // 这里比较的是整个三维向量，而不是只比较推力大小，
+    // 这样喷口角度变化时也能触发更新。
+    const double force_delta = (body_force - last_visual_force_).Length();
+
+    // 只有变化足够明显时才更新可视化。
+    if (force_delta >= visual_force_delta_threshold) {
+      should_publish = true;
+    }
+  }
+
+  // 只有满足条件时才真正构造并发布消息。
+  if (should_publish) {
     physics_msgs::msgs::Force force_msg;
-    force_msg.set_allocated_center(force_center_msg);
-    force_msg.set_allocated_force(force_vector_msg);
+
+    // 力的作用点：相对于 link 坐标系的施力位置。
+    auto *center = force_msg.mutable_center();
+    center->set_x(force_application_point_.X());
+    center->set_y(force_application_point_.Y());
+    center->set_z(force_application_point_.Z());
+
+    // 力向量本体：当前计算得到的机体系推力。
+    auto *force = force_msg.mutable_force();
+    force->set_x(body_force.X());
+    force->set_y(body_force.Y());
+    force->set_z(body_force.Z());
+
+    // 发布给 ForceVisual 插件用于 GUI 箭头显示。
     force_visual_pub_->Publish(force_msg);
 
+    // 记录本次发布时间，控制下一次最早允许发布时间。
     last_force_visual_pub_time_ = sim_time;
+
+    // 保存本次发布出去的力向量，供下次比较。
+    last_visual_force_ = body_force;
+    has_last_visual_force_ = true;
   }
+}
 }
 
 GZ_REGISTER_MODEL_PLUGIN(GazeboVectoredTurbofanModel);

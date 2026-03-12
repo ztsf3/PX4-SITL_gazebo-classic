@@ -1,4 +1,5 @@
 {% set phase1_disable_mavlink = false %}
+{% set phase1_disable_visual = true %}
 <?xml version="1.0"?>
 <!-- DO NOT EDIT: Generated from tailsitter.sdf.jinja -->
 <sdf version='1.6'>
@@ -147,12 +148,14 @@
             <uri>__default__</uri>
           </script>
         </material>
+        {% if not phase1_disable_visual %}
         <plugin name="jet_0_force_visual" filename="libForceVisual.so">
           <topic_name>vectored_force/jet_0</topic_name>
           <scale>0.03</scale>
           <link_name>rotor_0</link_name>
           <color>Gazebo/Red</color>
         </plugin>
+        {% endif %}
       </visual>
       <gravity>1</gravity>
       <velocity_decay/>
@@ -219,12 +222,14 @@
             <uri>__default__</uri>
           </script>
         </material>
+        {% if not phase1_disable_visual %}
         <plugin name="jet_1_force_visual" filename="libForceVisual.so">
           <topic_name>vectored_force/jet_1</topic_name>
           <scale>0.03</scale>
           <link_name>rotor_1</link_name>
           <color>Gazebo/Red</color>
         </plugin>
+        {% endif %}
       </visual>
       <gravity>1</gravity>
       <velocity_decay/>
@@ -291,12 +296,14 @@
             <uri>__default__</uri>
           </script>
         </material>
+        {% if not phase1_disable_visual %}
         <plugin name="jet_2_force_visual" filename="libForceVisual.so">
           <topic_name>vectored_force/jet_2</topic_name>
           <scale>0.03</scale>
           <link_name>rotor_2</link_name>
           <color>Gazebo/Red</color>
         </plugin>
+        {% endif %}
       </visual>
       <gravity>1</gravity>
       <velocity_decay/>
@@ -363,12 +370,14 @@
             <uri>__default__</uri>
           </script>
         </material>
+        {% if not phase1_disable_visual %}
         <plugin name="jet_3_force_visual" filename="libForceVisual.so">
           <topic_name>vectored_force/jet_3</topic_name>
           <scale>0.03</scale>
           <link_name>rotor_3</link_name>
           <color>Gazebo/Red</color>
         </plugin>
+        {% endif %}
       </visual>
       <gravity>1</gravity>
       <velocity_decay/>
@@ -578,7 +587,7 @@
       <linkName>rotor_0</linkName>
       <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
       <forceVisualTopic>vectored_force/jet_0</forceVisualTopic>
-      <forceVisualPubInterval>0.05</forceVisualPubInterval>
+      <forceVisualPubInterval>0.5</forceVisualPubInterval>
       <thrustChannel>0</thrustChannel>
       <vectorXChannel>4</vectorXChannel>
       <vectorYChannel>8</vectorYChannel>
@@ -592,7 +601,7 @@
       <linkName>rotor_1</linkName>
       <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
       <forceVisualTopic>vectored_force/jet_1</forceVisualTopic>
-      <forceVisualPubInterval>0.05</forceVisualPubInterval>
+      <forceVisualPubInterval>0.5</forceVisualPubInterval>
       <thrustChannel>1</thrustChannel>
       <vectorXChannel>5</vectorXChannel>
       <vectorYChannel>9</vectorYChannel>
@@ -606,7 +615,7 @@
       <linkName>rotor_2</linkName>
       <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
       <forceVisualTopic>vectored_force/jet_2</forceVisualTopic>
-      <forceVisualPubInterval>0.05</forceVisualPubInterval>
+      <forceVisualPubInterval>0.5</forceVisualPubInterval>
       <thrustChannel>2</thrustChannel>
       <vectorXChannel>6</vectorXChannel>
       <vectorYChannel>10</vectorYChannel>
@@ -620,7 +629,7 @@
       <linkName>rotor_3</linkName>
       <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
       <forceVisualTopic>vectored_force/jet_3</forceVisualTopic>
-      <forceVisualPubInterval>0.05</forceVisualPubInterval>
+      <forceVisualPubInterval>0.5</forceVisualPubInterval>
       <thrustChannel>3</thrustChannel>
       <vectorXChannel>7</vectorXChannel>
       <vectorYChannel>11</vectorYChannel>

@@ -123,6 +123,13 @@ private:
   // 时间戳缓存：用于 dt 计算与可视化节流。
   double prev_sim_time_{0.0};
   double last_force_visual_pub_time_{0.0};
+  // 上一次真正发布给可视化插件的力向量。
+  // 用它和当前 body_force 做比较，判断“变化是否足够大”。
+  ignition::math::Vector3d last_visual_force_{0.0, 0.0, 0.0};
+
+  // 标记是否已经发布过至少一次可视化消息。
+  // 第一次没有历史值可比较，所以要强制发布一次。
+  bool has_last_visual_force_{false};
 };
 
 } // namespace gazebo
