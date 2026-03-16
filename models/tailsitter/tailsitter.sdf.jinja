@@ -1,5 +1,5 @@
-{% set phase1_disable_mavlink = false %}
-{% set phase1_disable_visual = true %}
+{% set phase1_publish_motor_speed = false %}
+{% set phase1_disable_visual = false %}
 <?xml version="1.0"?>
 <!-- DO NOT EDIT: Generated from tailsitter.sdf.jinja -->
 <sdf version='1.6'>
@@ -659,7 +659,6 @@
       <pubRate>50</pubRate>
       <baroTopic>/baro</baroTopic>
     </plugin>
-    {% if not phase1_disable_mavlink %}
     <plugin name='mavlink_interface' filename='libgazebo_mavlink_interface.so'>
       <robotNamespace></robotNamespace>
       <imuSubTopic>/imu</imuSubTopic>
@@ -680,6 +679,7 @@
       <enable_lockstep>true</enable_lockstep>
       <use_tcp>true</use_tcp>
       <motorSpeedCommandPubTopic>/gazebo/command/motor_speed</motorSpeedCommandPubTopic>
+      <publishMotorSpeed>{{ phase1_publish_motor_speed }}</publishMotorSpeed>
       <control_channels>
         <channel name="jet_0_thrust">
           <input_index>0</input_index>
@@ -779,7 +779,6 @@
         </channel>
       </control_channels>
     </plugin>
-    {% endif %}
     <static>0</static>
   </model>
 </sdf>

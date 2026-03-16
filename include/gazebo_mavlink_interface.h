@@ -276,6 +276,8 @@ private:
 
   double optflow_distance_{0.0};
   double sonar_distance;
+  // 新增这一行：默认开启发布 CommandMotorSpeed
+  bool publish_motor_speed_{true};
 
   bool enable_lockstep_{false};
   double speed_factor_{1.0};
