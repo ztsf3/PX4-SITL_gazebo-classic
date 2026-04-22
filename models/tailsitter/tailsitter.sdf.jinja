@@ -1,5 +1,6 @@
 {% set phase1_publish_motor_speed = false %}
 {% set phase1_disable_visual = false %}
+{% set phase1_show_body_axes = true %}
 <?xml version="1.0"?>
 <!-- DO NOT EDIT: Generated from tailsitter.sdf.jinja -->
 <sdf version='1.6'>
@@ -57,6 +58,64 @@
           </script>
         </material>
       </visual>
+    {% if phase1_show_body_axes %}
+      <visual name='base_link_axis_origin'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.03</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Yellow</name>
+            <uri>__default__</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name='base_link_axis_x'>
+        <pose>0.15 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.30 0.01 0.01</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Red</name>
+            <uri>__default__</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name='base_link_axis_y'>
+        <pose>0 0.15 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.01 0.30 0.01</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Green</name>
+            <uri>__default__</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name='base_link_axis_z'>
+        <pose>0 0 0.15 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.01 0.01 0.30</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Blue</name>
+            <uri>__default__</uri>
+          </script>
+        </material>
+      </visual>
+    {% endif %}
       <gravity>1</gravity>
       <velocity_decay/>
       <self_collide>0</self_collide>
@@ -593,7 +652,7 @@
       <vectorYChannel>8</vectorYChannel>
       <maxThrust>35.0</maxThrust>
       <maxVectorAngleRad>0.523599</maxVectorAngleRad>
-      <timeConstant>0.03</timeConstant>
+      <timeConstant>0.0</timeConstant>
       <forceApplicationPoint>0 0 0</forceApplicationPoint>
     </plugin>
     <plugin name='vectored_jet_1' filename='libgazebo_vectored_turbofan_model.so'>
@@ -607,7 +666,7 @@
       <vectorYChannel>9</vectorYChannel>
       <maxThrust>35.0</maxThrust>
       <maxVectorAngleRad>0.523599</maxVectorAngleRad>
-      <timeConstant>0.03</timeConstant>
+      <timeConstant>0.0</timeConstant>
       <forceApplicationPoint>0 0 0</forceApplicationPoint>
     </plugin>
     <plugin name='vectored_jet_2' filename='libgazebo_vectored_turbofan_model.so'>
@@ -621,7 +680,7 @@
       <vectorYChannel>10</vectorYChannel>
       <maxThrust>35.0</maxThrust>
       <maxVectorAngleRad>0.523599</maxVectorAngleRad>
-      <timeConstant>0.03</timeConstant>
+      <timeConstant>0.0</timeConstant>
       <forceApplicationPoint>0 0 0</forceApplicationPoint>
     </plugin>
     <plugin name='vectored_jet_3' filename='libgazebo_vectored_turbofan_model.so'>
@@ -635,7 +694,7 @@
       <vectorYChannel>11</vectorYChannel>
       <maxThrust>35.0</maxThrust>
       <maxVectorAngleRad>0.523599</maxVectorAngleRad>
-      <timeConstant>0.03</timeConstant>
+      <timeConstant>0.0</timeConstant>
       <forceApplicationPoint>0 0 0</forceApplicationPoint>
     </plugin>
     <plugin name='gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>

@@ -118,6 +118,16 @@ private:
   double vector_x_state_{0.0};
   double vector_y_state_{0.0};
 
+    // 直接三轴分力命令
+  double force_x_cmd_{0.0};
+  double force_y_cmd_{0.0};
+  double force_z_cmd_{0.0};
+
+  // 一阶惯性后的三轴分力状态
+  double force_x_state_{0.0};
+  double force_y_state_{0.0};
+  double force_z_state_{0.0};
+
   ignition::math::Vector3d force_application_point_{0.0, 0.0, 0.0};
 
   // 时间戳缓存：用于 dt 计算与可视化节流。
